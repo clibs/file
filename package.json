@@ -1,0 +1,9 @@
+{
+  "name": "file",
+  "version": "0.0.1",
+  "repo": "clibs/file",
+  "description": "File utilities",
+  "keywords": ["file", "read", "size"],
+  "license": "MIT",
+  "src": ["src/file.c", "src/file.h"]
+}

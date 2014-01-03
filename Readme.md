@@ -1,7 +1,7 @@
 
 # file
 
-  Lookup executable via __PATH__ environment variable or a given path string.
+  File utilities
 
 ## Installation
 

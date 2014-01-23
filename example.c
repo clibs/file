@@ -14,6 +14,10 @@ main(int argc, char **argv) {
   printf("exists: %s\n", file_exists(name) ? "yes" : "no");
   printf("size: %lld\n", file_size(name));
   puts(file_read(name));
-  
+
+  char* path = "/tmp/long/dir/sequence";
+  file_mkdir_p(path);
+  printf("'%s' %s\n", path, file_exists(path) ? "created" : "not created");
+
   return 0;
 }

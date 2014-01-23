@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
 #include "file.h"
 
 /*
@@ -55,3 +56,32 @@ file_read(const char *filename) {
 
   return buf;
 }
+/*
+ * Recursively creates directories on `path`.
+ * Returns 1 if somehow couldn't create one.
+ */
+void
+file_mkdir_p(const char *path)
+{
+  char   tmp[256];
+  char*  p = NULL;
+  size_t len;
+
+  snprintf(tmp, sizeof(tmp), "%s", path);
+  len = strlen(tmp);
+
+  if (tmp[len - 1] == '/')
+    tmp[len - 1] = '\0';
+
+  for (p = tmp; *p != '\0'; p++)
+  {
+    if (*p == '/')
+    {
+      *p = '\0';
+      mkdir(tmp, S_IRWXU);
+      *p = '/';
+    }
+  }
+  mkdir(tmp, S_IRWXU);
+}
+

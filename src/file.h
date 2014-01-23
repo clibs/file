@@ -19,4 +19,7 @@ file_exists(const char *filename);
 char *
 file_read(const char *filename);
 
+void
+file_mkdir_p(const char *path);
+
 #endif

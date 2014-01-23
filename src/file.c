@@ -61,22 +61,18 @@ file_read(const char *filename) {
  * Returns 1 if somehow couldn't create one.
  */
 void
-file_mkdir_p(const char *path)
-{
-  char   tmp[256];
-  char*  p = NULL;
-  size_t len;
-
+file_mkdir_p(const char *path) {
+  char tmp[256];
   snprintf(tmp, sizeof(tmp), "%s", path);
-  len = strlen(tmp);
+
+  size_t len = strlen(tmp);
 
   if (tmp[len - 1] == '/')
     tmp[len - 1] = '\0';
 
-  for (p = tmp; *p != '\0'; p++)
-  {
-    if (*p == '/')
-    {
+  char* p = NULL;
+  for (p = tmp; *p != '\0'; p++) {
+    if (*p == '/') {
       *p = '\0';
       mkdir(tmp, S_IRWXU);
       *p = '/';

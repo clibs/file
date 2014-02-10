@@ -5,12 +5,12 @@
 // Copyright (c) 2013 TJ Holowaychuk <tj@vision-media.ca>
 //
 
-#include <assert.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
 #include "file.h"
 
 /*
@@ -20,7 +20,7 @@
 off_t
 file_size(const char *filename) {
   struct stat s;
-  if (stat(filename, &s) < 0) return -1;
+  if (stat(filename, &s) < 0) return -errno;
   return s.st_size;
 }
 
@@ -30,7 +30,7 @@ file_size(const char *filename) {
 
 int
 file_exists(const char *filename) {
-  return -1 != file_size(filename);
+  return -ENOENT != file_size(filename);
 }
 
 /*
@@ -49,9 +49,7 @@ file_read(const char *filename) {
   if (fd < 0) return NULL;
 
   ssize_t size = read(fd, buf, len);
-  close(fd);
-
-  if (size != len) return NULL;
+  if (close(fd) < 0 || size != len) return NULL;
 
   return buf;
 }

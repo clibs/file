@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include <sys/stat.h>
 #include "file.h"
 
 /*
@@ -62,8 +61,8 @@ file_read(const char *filename) {
  */
 void
 file_mkdir_p(const char *path) {
-  char tmp[256];
-  snprintf(tmp, sizeof(tmp), "%s", path);
+  char* tmp = strndup(path, 256);
+  if (!tmp) return;
 
   size_t len = strlen(tmp);
 
@@ -79,5 +78,6 @@ file_mkdir_p(const char *path) {
     }
   }
   mkdir(tmp, S_IRWXU);
+  free(tmp);
 }
 

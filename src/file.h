@@ -9,6 +9,7 @@
 #define FILE_H
 
 #include <sys/stat.h>
+#include <sys/types.h>
 
 off_t
 file_size(const char *filename);
@@ -18,5 +19,8 @@ file_exists(const char *filename);
 
 char *
 file_read(const char *filename);
+
+void
+file_mkdir_p(const char *path);
 
 #endif

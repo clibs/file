@@ -55,3 +55,29 @@ file_read(const char *filename) {
 
   return buf;
 }
+/*
+ * Recursively creates directories on `path`.
+ * Returns 1 if somehow couldn't create one.
+ */
+void
+file_mkdir_p(const char *path) {
+  char* tmp = strndup(path, 256);
+  if (!tmp) return;
+
+  size_t len = strlen(tmp);
+
+  if (tmp[len - 1] == '/')
+    tmp[len - 1] = '\0';
+
+  char* p = NULL;
+  for (p = tmp; *p != '\0'; p++) {
+    if (*p == '/') {
+      *p = '\0';
+      mkdir(tmp, S_IRWXU);
+      *p = '/';
+    }
+  }
+  mkdir(tmp, S_IRWXU);
+  free(tmp);
+}
+
